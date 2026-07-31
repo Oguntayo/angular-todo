@@ -1,16 +1,11 @@
 # TaskFlow — Enterprise Task Management Platform
-
-[![Angular](https://img.shields.io/badge/Angular-21.2-dd0031.svg?style=flat-square&logo=angular)](https://angular.dev/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178c6.svg?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
-[![License](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](LICENSE)
-
 An enterprise-grade, high-performance task management web application built with **Angular 21**, **NgRx Signals**, and a clean, high-contrast **Light Enterprise Design System** inspired by Linear and Jira.
 
 ---
 
 ## Features
 
-- **⚡ Signal-Driven Architecture**: Powered by Angular 21 `signal()`, `computed()`, and reactive state management for zero-overhead change detection.
+- ** Signal-Driven Architecture**: Powered by Angular 21 `signal()`, `computed()`, and reactive state management for zero-overhead change detection.
 - **Real-Time Analytics Dashboard**: Live KPI metric cards (Total, In Progress, Completed, Overdue), priority progress bars, and recent activity monitoring.
 - **Full Task CRUD & Operations**: Complete workflow to create, edit, inline-complete, filter, sort, and delete tasks backed by a REST API.
 - **Advanced Search & Filter Toolbar**: Real-time keyword search, status tab filtering, priority selection, and flexible sorting (date, priority, title).
