@@ -1,0 +1,29 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  height: 22px;
+  padding: 0 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+
+  /* Priority */
+  &--high   { background: var(--priority-high-bg);   color: var(--priority-high);   border: 1px solid rgba(220, 38, 38, 0.2); }
+  &--medium { background: var(--priority-medium-bg); color: var(--priority-medium); border: 1px solid rgba(217, 119, 6, 0.2); }
+  &--low    { background: var(--priority-low-bg);    color: var(--priority-low);    border: 1px solid rgba(22, 163, 74, 0.2); }
+
+  /* Status */
+  &--todo        { background: var(--status-todo-bg);        color: var(--status-todo);        border: 1px solid var(--border); }
+  &--in-progress { background: var(--status-in-progress-bg); color: var(--status-in-progress); border: 1px solid rgba(124, 58, 237, 0.2); }
+  &--completed   { background: var(--status-completed-bg);   color: var(--status-completed);   border: 1px solid rgba(5, 150, 105, 0.2); }
+  &--archived    { background: var(--status-archived-bg);    color: var(--status-archived);    border: 1px solid var(--border); }
+
+  /* Category */
+  &--category {
+    background: #f1f5f9;
+    color: #334155;
+    border: 1px solid #cbd5e1;
+  }
+}

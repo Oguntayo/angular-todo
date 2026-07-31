@@ -1,0 +1,181 @@
+<div class="todos-page">
+  <!-- Header & Primary Action (Fixed Top) -->
+  <div class="todos-page__header">
+    <div>
+      <h1 class="todos-page__title">Task Management</h1>
+      <p class="todos-page__subtitle">Track, filter, and complete team deliverables.</p>
+    </div>
+    <button class="btn-primary" id="btn-create-task" (click)="openCreate()">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+           aria-hidden="true" style="width:16px;height:16px">
+        <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+      </svg>
+      New Task
+    </button>
+  </div>
+
+  <!-- Filter & Control Toolbar (Fixed Top) -->
+  <div class="toolbar">
+    <!-- Search Box -->
+    <div class="toolbar__search">
+      <svg class="toolbar__search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+           fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <input type="text"
+             class="toolbar__search-input"
+             placeholder="Filter tasks by keyword, category..."
+             [ngModel]="search"
+             (ngModelChange)="setSearch($event)"
+             id="input-task-search" />
+      @if (search) {
+        <button class="toolbar__clear-btn" (click)="setSearch('')" aria-label="Clear search">✕</button>
+      }
+    </div>
+
+    <!-- Status Tabs -->
+    <div class="status-tabs">
+      @for (opt of statusOptions; track opt.value) {
+        <button class="status-tabs__tab"
+                [class.status-tabs__tab--active]="status === opt.value"
+                (click)="setStatus(opt.value)">
+          {{ opt.label }}
+        </button>
+      }
+    </div>
+
+    <!-- Priority & Sort Dropdowns -->
+    <div class="toolbar__selects">
+      <select class="toolbar__select" [ngModel]="priority" (ngModelChange)="setPriority($event)" id="select-priority-filter">
+        @for (opt of priorityOptions; track opt.value) {
+          <option [value]="opt.value">{{ opt.label }}</option>
+        }
+      </select>
+
+      <select class="toolbar__select" (change)="setSort(sortOptions[$any($event.target).selectedIndex])" id="select-sort-order">
+        @for (opt of sortOptions; track opt.label) {
+          <option [value]="opt.label">{{ opt.label }}</option>
+        }
+      </select>
+    </div>
+  </div>
+
+  <!-- Scrollable Cards Body -->
+  <div class="todos-page__scroll-container">
+    @if (loading) {
+      <div class="todos-page__center">
+        <app-spinner />
+        <p>Fetching tasks...</p>
+      </div>
+    } @else if (error) {
+      <div class="todos-page__error">
+        <p>{{ error }}</p>
+        <button class="btn btn--ghost" (click)="loadTodos()">Retry</button>
+      </div>
+    } @else if (todos.length === 0) {
+      <div class="todos-page__empty">
+        <div class="todos-page__empty-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+            <line x1="9" y1="15" x2="15" y2="15"/>
+          </svg>
+        </div>
+        <h3>No tasks found</h3>
+        <p>
+          @if (isFiltered) {
+            No tasks match your active filters. Try clearing your search query or criteria.
+          } @else {
+            Your workspace has no tasks recorded yet. Get started by creating your first task!
+          }
+        </p>
+        @if (isFiltered) {
+          <button class="btn btn--ghost" (click)="clearFilters()">Clear Filters</button>
+        } @else {
+          <button class="btn-primary" (click)="openCreate()">Create First Task</button>
+        }
+      </div>
+    } @else {
+      <!-- Task Grid -->
+      <div class="task-grid">
+        @for (todo of todos; track todo.id) {
+          <app-todo-card
+            [todo]="todo"
+            (edit)="openEdit($event)"
+            (delete)="onDelete($event)"
+            (statusChange)="onStatusChange(todo, $event)" />
+        }
+      </div>
+    }
+  </div>
+
+  <!-- Pagination Controls (Fixed Bottom) -->
+  @if (totalTodos > 0 && !loading && !error) {
+    <div class="pagination">
+      <div class="pagination__info">
+        Showing <strong>{{ paginationStats.start }}</strong> – <strong>{{ paginationStats.end }}</strong> of <strong>{{ paginationStats.total }}</strong> tasks
+      </div>
+
+      <div class="pagination__controls">
+        <div class="pagination__size">
+          <label for="select-page-size">Per page:</label>
+          <select id="select-page-size" [ngModel]="pageSize" (ngModelChange)="onPageSizeChange($event)">
+            @for (size of pageSizeOptions; track size) {
+              <option [value]="size">{{ size }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="pagination__nav">
+          <button class="pagination__btn"
+                  [disabled]="currentPage === 1"
+                  (click)="setPage(1)"
+                  title="First Page"
+                  aria-label="First Page">
+            «
+          </button>
+          <button class="pagination__btn"
+                  [disabled]="currentPage === 1"
+                  (click)="setPage(currentPage - 1)"
+                  title="Previous Page"
+                  aria-label="Previous Page">
+            ‹
+          </button>
+
+          @for (p of pages; track p) {
+            <button class="pagination__btn"
+                    [class.pagination__btn--active]="currentPage === p"
+                    (click)="setPage(p)">
+              {{ p }}
+            </button>
+          }
+
+          <button class="pagination__btn"
+                  [disabled]="currentPage === totalPages"
+                  (click)="setPage(currentPage + 1)"
+                  title="Next Page"
+                  aria-label="Next Page">
+            ›
+          </button>
+          <button class="pagination__btn"
+                  [disabled]="currentPage === totalPages"
+                  (click)="setPage(totalPages)"
+                  title="Last Page"
+                  aria-label="Last Page">
+            »
+          </button>
+        </div>
+      </div>
+    </div>
+  }
+
+  <!-- Task Form Modal -->
+  @if (showForm()) {
+    <app-todo-form
+      [todo]="editingTodo()"
+      (save)="onSaved($event)"
+      (cancel)="closeForm()" />
+  }
+</div>

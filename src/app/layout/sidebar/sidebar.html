@@ -1,0 +1,101 @@
+<!-- Mobile Backdrop -->
+@if (isOpen) {
+  <div class="sidebar-backdrop" (click)="closeSidebar.emit()" aria-hidden="true"></div>
+}
+
+<aside class="sidebar" [class.sidebar--open]="isOpen">
+  <!-- Logo & Mobile Close -->
+  <div class="sidebar__brand">
+    <div class="sidebar__logo">
+      <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="32" height="32" rx="8" fill="#2563eb"/>
+        <path d="M8 16l6 6 10-12" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <span class="sidebar__brand-name">TaskFlow</span>
+
+    <button class="sidebar__close-btn" (click)="closeSidebar.emit()" aria-label="Close menu">
+      ✕
+    </button>
+  </div>
+
+  <!-- Nav -->
+  <nav class="sidebar__nav" aria-label="Main navigation">
+    <ul class="sidebar__nav-list">
+      <li>
+        <a routerLink="/dashboard" routerLinkActive="sidebar__nav-link--active"
+           class="sidebar__nav-link" id="nav-dashboard" (click)="onNavClick()">
+          <span class="sidebar__nav-icon" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="7" height="7"/>
+              <rect x="14" y="3" width="7" height="7"/>
+              <rect x="14" y="14" width="7" height="7"/>
+              <rect x="3" y="14" width="7" height="7"/>
+            </svg>
+          </span>
+          <span class="sidebar__nav-label">Dashboard</span>
+        </a>
+      </li>
+      <li>
+        <a routerLink="/todos" routerLinkActive="sidebar__nav-link--active"
+           class="sidebar__nav-link" id="nav-tasks" (click)="onNavClick()">
+          <span class="sidebar__nav-icon" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 11l3 3L22 4"/>
+              <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+            </svg>
+          </span>
+          <span class="sidebar__nav-label">Tasks</span>
+          @if (inProgressCount > 0) {
+            <span class="sidebar__badge">{{ inProgressCount }}</span>
+          }
+        </a>
+      </li>
+    </ul>
+
+    <div class="sidebar__section-label">Workspace</div>
+    <ul class="sidebar__nav-list">
+      <li>
+        <a class="sidebar__nav-link sidebar__nav-link--disabled" id="nav-reports">
+          <span class="sidebar__nav-icon" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/>
+              <line x1="6" y1="20" x2="6" y2="14"/>
+            </svg>
+          </span>
+          <span class="sidebar__nav-label">Reports</span>
+          <span class="sidebar__coming-soon">Soon</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidebar__nav-link sidebar__nav-link--disabled" id="nav-team">
+          <span class="sidebar__nav-icon" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+              <circle cx="9" cy="7" r="4"/>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>
+          </span>
+          <span class="sidebar__nav-label">Team</span>
+          <span class="sidebar__coming-soon">Soon</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Footer area -->
+  <div class="sidebar__footer">
+    <div class="sidebar__user">
+      <div class="sidebar__avatar">JD</div>
+      <div class="sidebar__user-info">
+        <span class="sidebar__user-name">Jane Doe</span>
+        <span class="sidebar__user-role">Senior Engineer</span>
+      </div>
+    </div>
+  </div>
+</aside>

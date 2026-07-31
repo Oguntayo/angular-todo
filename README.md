@@ -1,59 +1,155 @@
-# EnterpriseTodo
+# TaskFlow — Enterprise Task Management Platform
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.19.
+[![Angular](https://img.shields.io/badge/Angular-21.2-dd0031.svg?style=flat-square&logo=angular)](https://angular.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178c6.svg?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](LICENSE)
 
-## Development server
+An enterprise-grade, high-performance task management web application built with **Angular 21**, **NgRx Signals**, and a clean, high-contrast **Light Enterprise Design System** inspired by Linear and Jira.
 
-To start a local development server, run:
+---
 
-```bash
-ng serve
-```
+## Features
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+- **⚡ Signal-Driven Architecture**: Powered by Angular 21 `signal()`, `computed()`, and reactive state management for zero-overhead change detection.
+- **Real-Time Analytics Dashboard**: Live KPI metric cards (Total, In Progress, Completed, Overdue), priority progress bars, and recent activity monitoring.
+- **Full Task CRUD & Operations**: Complete workflow to create, edit, inline-complete, filter, sort, and delete tasks backed by a REST API.
+- **Advanced Search & Filter Toolbar**: Real-time keyword search, status tab filtering, priority selection, and flexible sorting (date, priority, title).
+- **Light Enterprise Design System**: Crisp white and slate surface layers with high-contrast typography (Inter font), semantic badges, and smooth micro-animations.
+- **Fully Responsive Across All Devices**: Native off-canvas drawer overlay on mobile (`<768px`) with backdrop blur, touch-scrollable status tabs, and adaptive grid columns.
 
-## Code scaffolding
+---
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## Technology Stack
 
-```bash
-ng generate component component-name
-```
+| Layer | Technology |
+| :--- | :--- |
+| **Framework** | Angular 21 (Standalone Components) |
+| **Language** | TypeScript 5.9 |
+| **State Management** | NgRx Signals (`signal()`, `computed()`) |
+| **Form Handling** | Angular Reactive Forms (`FormBuilder`, `Validators`) |
+| **Styling** | SCSS with CSS Custom Properties (Design Tokens) |
+| **Mock Backend** | JSON-Server (REST API on `http://localhost:3000`) |
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+---
 
-```bash
-ng generate --help
-```
+## Quick Start & Local Setup
 
-## Building
+### Prerequisites
 
-To build the project run:
+Ensure you have the following installed on your machine:
+- **Node.js**: `v18.x` or higher
+- **npm**: `v9.x` or higher
 
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
+### 1. Clone the Repository
 
 ```bash
-ng e2e
+git clone https://github.com/Oguntayo/angular-todo.git
+cd angular-todo
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+> **Note**: If your root folder contains `enterprise-todo`, navigate into it:
+> ```bash
+> cd enterprise-todo
+> ```
 
-## Additional Resources
+### 2. Install Dependencies
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+```bash
+npm install
+```
+
+### 3. Configure Environment Variables
+
+Copy the example environment file to create your local `.env` configuration file:
+
+```bash
+cp .env.example .env
+```
+
+---
+
+## Running the Application
+
+To run the application locally, you will start the **Mock Backend API** and the **Angular Frontend**.
+
+### Step 1: Start the Mock REST API Server
+
+In a terminal window, start `json-server` (runs on port `3000`):
+
+```bash
+npm run mock-api
+```
+
+*The API server will serve the initial dataset from `backend/db.json` at `http://localhost:3000/todos`.*
+
+### Step 2: Start the Angular Development Server
+
+In a second terminal window, run:
+
+```bash
+npm start
+```
+
+Open your browser and navigate to:
+```
+http://localhost:4200/
+```
+
+---
+
+## Build for Production
+
+To create an optimized production bundle:
+
+```bash
+npm run build
+```
+
+The compiled build artifacts will be generated in the `dist/enterprise-todo/` directory.
+
+---
+
+## Project Architecture
+
+```
+enterprise-todo/
+├── backend/
+│   └── db.json               # Seed database for json-server REST API
+├── src/
+│   ├── app/
+│   │   ├── core/             # Core services, models, guards & interceptors
+│   │   ├── features/
+│   │   │   ├── dashboard/    # Dashboard analytics page & routes
+│   │   │   └── todos/        # Task management page, store, service & components
+│   │   │       ├── components/
+│   │   │       │   ├── todo-card/   # Task card component
+│   │   │       │   └── todo-form/   # Modal form for create/edit
+│   │   │       ├── models/          # Interfaces & Enums (Priority, Status)
+│   │   │       ├── services/        # TodoService (HttpClient CRUD)
+│   │   │       └── store/           # TodoStore (Signals & computed state)
+│   │   ├── layout/           # App Shell, Header, Sidebar (Drawer), Footer
+│   │   └── shared/           # Reusable UI components (Badge, Spinner, ConfirmDialog)
+│   ├── styles.scss           # Global CSS Custom Property Design Tokens
+│   ├── index.html            # Google Fonts & SEO Meta tags
+│   └── main.ts               # Application entrypoint
+├── angular.json              # Angular CLI configuration
+└── package.json              # Dependencies & NPM scripts
+```
+
+---
+
+## NPM Scripts Reference
+
+| Command | Description |
+| :--- | :--- |
+| `npm start` | Starts the Angular development server on port 4200. |
+| `npm run mock-api` | Starts the json-server REST backend on port 3000. |
+| `npm run build` | Compiles the production build into `dist/`. |
+| `npm run watch` | Builds the project in development mode and watches for changes. |
+| `npm test` | Runs unit tests via Vitest / Angular test suite. |
+
+---
+
+## License
+
+Distributed under the MIT License. See `LICENSE` for details.

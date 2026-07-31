@@ -1,0 +1,14 @@
+<div class="shell">
+  <app-header (toggleSidebar)="toggleMobileSidebar()" />
+
+  <div class="shell__body">
+    <app-sidebar [isOpen]="mobileSidebarOpen()" (closeSidebar)="closeMobileSidebar()" />
+
+    <main class="shell__main">
+      <div class="shell__content">
+        <router-outlet />
+      </div>
+      <app-footer />
+    </main>
+  </div>
+</div>

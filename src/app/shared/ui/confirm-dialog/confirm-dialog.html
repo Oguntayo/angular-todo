@@ -1,0 +1,16 @@
+<div class="confirm-backdrop" role="dialog" aria-modal="true" aria-label="Confirm action">
+  <div class="confirm-dialog scale-in">
+    <div class="confirm-dialog__icon" aria-hidden="true">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6"/>
+      </svg>
+    </div>
+    <h3 class="confirm-dialog__title">Confirm Delete</h3>
+    <p class="confirm-dialog__message">{{ message }}</p>
+    <div class="confirm-dialog__actions">
+      <button class="btn btn--ghost" id="btn-confirm-cancel" (click)="cancelled.emit()">Cancel</button>
+      <button class="btn btn--danger" id="btn-confirm-delete" (click)="confirmed.emit()">Delete</button>
+    </div>
+  </div>
+</div>

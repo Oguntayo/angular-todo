@@ -1,0 +1,209 @@
+<div class="dashboard">
+
+  <!-- Page header -->
+  <div class="dashboard__header">
+    <div>
+      <h1 class="dashboard__title">Dashboard</h1>
+      <p class="dashboard__subtitle">Good morning — here's your task overview.</p>
+    </div>
+    <a routerLink="/todos" class="btn-primary" id="btn-view-all-tasks">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+           aria-hidden="true" style="width:16px;height:16px">
+        <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+      </svg>
+      Manage Tasks
+    </a>
+  </div>
+
+  <!-- Loading / Error states -->
+  @if (loading) {
+    <div class="dashboard__state-center">
+      <app-spinner />
+      <p>Loading your workspace…</p>
+    </div>
+  } @else if (error) {
+    <div class="dashboard__error">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"
+           aria-hidden="true">
+        <circle cx="12" cy="12" r="10"/>
+        <line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+      </svg>
+      <strong>Connection error</strong>
+      <span>{{ error }}</span>
+    </div>
+  } @else {
+
+    <!-- KPI Stats Row -->
+    <div class="kpi-grid">
+      <div class="kpi-card kpi-card--total">
+        <div class="kpi-card__icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+        </div>
+        <div class="kpi-card__content">
+          <span class="kpi-card__value">{{ stats.total }}</span>
+          <span class="kpi-card__label">Total Tasks</span>
+        </div>
+      </div>
+
+      <div class="kpi-card kpi-card--progress">
+        <div class="kpi-card__icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+        </div>
+        <div class="kpi-card__content">
+          <span class="kpi-card__value">{{ stats.inProgress }}</span>
+          <span class="kpi-card__label">In Progress</span>
+        </div>
+      </div>
+
+      <div class="kpi-card kpi-card--completed">
+        <div class="kpi-card__icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        </div>
+        <div class="kpi-card__content">
+          <span class="kpi-card__value">{{ stats.completed }}</span>
+          <span class="kpi-card__label">Completed</span>
+        </div>
+      </div>
+
+      <div class="kpi-card" [class.kpi-card--overdue]="stats.overdue > 0">
+        <div class="kpi-card__icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <div class="kpi-card__content">
+          <span class="kpi-card__value">{{ stats.overdue }}</span>
+          <span class="kpi-card__label">Overdue</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Two-column grid -->
+    <div class="dashboard__grid">
+
+      <!-- Priority breakdown -->
+      <div class="panel">
+        <div class="panel__header">
+          <h2 class="panel__title">Priority Breakdown</h2>
+        </div>
+        <div class="panel__body">
+          <div class="priority-bar">
+            <div class="priority-bar__row">
+              <span class="priority-bar__label">
+                <span class="priority-dot priority-dot--high"></span> High
+              </span>
+              <div class="priority-bar__track">
+                <div class="priority-bar__fill priority-bar__fill--high"
+                     [style.width]="priorityBarWidth(stats.high)"></div>
+              </div>
+              <span class="priority-bar__count">{{ stats.high }}</span>
+            </div>
+            <div class="priority-bar__row">
+              <span class="priority-bar__label">
+                <span class="priority-dot priority-dot--medium"></span> Medium
+              </span>
+              <div class="priority-bar__track">
+                <div class="priority-bar__fill priority-bar__fill--medium"
+                     [style.width]="priorityBarWidth(stats.medium)"></div>
+              </div>
+              <span class="priority-bar__count">{{ stats.medium }}</span>
+            </div>
+            <div class="priority-bar__row">
+              <span class="priority-bar__label">
+                <span class="priority-dot priority-dot--low"></span> Low
+              </span>
+              <div class="priority-bar__track">
+                <div class="priority-bar__fill priority-bar__fill--low"
+                     [style.width]="priorityBarWidth(stats.low)"></div>
+              </div>
+              <span class="priority-bar__count">{{ stats.low }}</span>
+            </div>
+          </div>
+
+          <!-- Status breakdown -->
+          <div class="status-chips">
+            <div class="status-chip">
+              <span class="status-chip__count">{{ stats.todo }}</span>
+              <span class="status-chip__label">To Do</span>
+            </div>
+            <div class="status-chip status-chip--progress">
+              <span class="status-chip__count">{{ stats.inProgress }}</span>
+              <span class="status-chip__label">In Progress</span>
+            </div>
+            <div class="status-chip status-chip--done">
+              <span class="status-chip__count">{{ stats.completed }}</span>
+              <span class="status-chip__label">Done</span>
+            </div>
+            <div class="status-chip status-chip--archived">
+              <span class="status-chip__count">{{ stats.archived }}</span>
+              <span class="status-chip__label">Archived</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Urgent tasks -->
+      <div class="panel">
+        <div class="panel__header">
+          <h2 class="panel__title">Urgent Attention</h2>
+          <a routerLink="/todos" class="panel__link">View all</a>
+        </div>
+        <div class="panel__body">
+          @if (highPriorityTodos.length === 0) {
+            <p class="panel__empty">🎉 No urgent tasks right now.</p>
+          } @else {
+            <ul class="task-list">
+              @for (todo of highPriorityTodos; track todo.id) {
+                <li class="task-list__item" [class.task-list__item--overdue]="isOverdue(todo)">
+                  <div class="task-list__indicator"></div>
+                  <div class="task-list__body">
+                    <span class="task-list__title">{{ todo.title }}</span>
+                    <div class="task-list__meta">
+                      <app-badge variant="status" [value]="todo.status" />
+                      <span class="task-list__due" [class.task-list__due--overdue]="isOverdue(todo)">
+                        {{ isOverdue(todo) ? '⚠ ' : '' }}Due {{ formatDate(todo.dueDate) }}
+                      </span>
+                    </div>
+                  </div>
+                </li>
+              }
+            </ul>
+          }
+        </div>
+      </div>
+
+      <!-- Recent activity -->
+      <div class="panel panel--full">
+        <div class="panel__header">
+          <h2 class="panel__title">Recent Activity</h2>
+          <a routerLink="/todos" class="panel__link">View all tasks →</a>
+        </div>
+        <div class="panel__body">
+          @if (recentTodos.length === 0) {
+            <p class="panel__empty">No recent activity.</p>
+          } @else {
+            <div class="activity-table">
+              <div class="activity-table__head">
+                <span>Task</span>
+                <span>Category</span>
+                <span>Priority</span>
+                <span>Status</span>
+                <span>Updated</span>
+              </div>
+              @for (todo of recentTodos; track todo.id) {
+                <div class="activity-table__row fade-in">
+                  <span class="activity-table__title truncate">{{ todo.title }}</span>
+                  <span><app-badge variant="category" [value]="todo.category" /></span>
+                  <span><app-badge variant="priority" [value]="todo.priority" /></span>
+                  <span><app-badge variant="status" [value]="todo.status" /></span>
+                  <span class="activity-table__date text-muted">{{ formatDate(todo.updatedAt) }}</span>
+                </div>
+              }
+            </div>
+          }
+        </div>
+      </div>
+
+    </div>
+  }
+</div>

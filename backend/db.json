@@ -1,0 +1,115 @@
+{
+  "todos": [
+    {
+      "id": "1",
+      "title": "Migrate authentication service to OAuth 2.0",
+      "description": "Replace legacy JWT implementation with OAuth 2.0 / PKCE flow. Coordinate with security team for compliance review.",
+      "priority": "HIGH",
+      "status": "IN_PROGRESS",
+      "category": "Security",
+      "dueDate": "2026-08-10T00:00:00Z",
+      "createdAt": "2026-07-20T08:00:00Z",
+      "updatedAt": "2026-07-28T14:30:00Z"
+    },
+    {
+      "id": "2",
+      "title": "Q3 architecture review document",
+      "description": "Draft and circulate the Q3 system architecture review. Include microservices diagram and capacity projections.",
+      "priority": "HIGH",
+      "status": "IN_PROGRESS",
+      "category": "Architecture",
+      "dueDate": "2026-08-05T00:00:00Z",
+      "createdAt": "2026-07-22T09:00:00Z",
+      "updatedAt": "2026-07-31T09:31:17.345Z"
+    },
+    {
+      "id": "3",
+      "title": "Onboard new engineers — toolchain setup",
+      "description": "Prepare dev environment scripts, access provisioning checklist, and knowledge transfer sessions for Q3 new hires.",
+      "priority": "MEDIUM",
+      "status": "TODO",
+      "category": "People",
+      "dueDate": "2026-07-30T00:00:00Z",
+      "createdAt": "2026-07-15T10:00:00Z",
+      "updatedAt": "2026-07-31T10:23:20.342Z"
+    },
+    {
+      "id": "4",
+      "title": "Performance audit — checkout funnel",
+      "description": "Run Lighthouse and Web Vitals audit on the checkout funnel. Target LCP < 2.5s and INP < 200ms.",
+      "priority": "HIGH",
+      "status": "TODO",
+      "category": "Performance",
+      "dueDate": "2026-08-15T00:00:00Z",
+      "createdAt": "2026-07-25T11:00:00Z",
+      "updatedAt": "2026-07-25T11:00:00Z"
+    },
+    {
+      "id": "5",
+      "title": "Implement dark mode across design system",
+      "description": "Add CSS custom properties theming support to all shared UI components. Test with WCAG AA contrast ratios.",
+      "priority": "MEDIUM",
+      "status": "IN_PROGRESS",
+      "category": "Design",
+      "dueDate": "2026-08-20T00:00:00Z",
+      "createdAt": "2026-07-26T08:30:00Z",
+      "updatedAt": "2026-07-30T09:00:00Z"
+    },
+    {
+      "id": "6",
+      "title": "Data retention policy compliance",
+      "description": "Review and update data retention policies across all services to comply with GDPR Article 5 requirements.",
+      "priority": "HIGH",
+      "status": "TODO",
+      "category": "Compliance",
+      "dueDate": "2026-07-31T00:00:00Z",
+      "createdAt": "2026-07-10T12:00:00Z",
+      "updatedAt": "2026-07-10T12:00:00Z"
+    },
+    {
+      "id": "7",
+      "title": "CI/CD pipeline optimisation",
+      "description": "Reduce average build time from 12 min to under 6 min by parallelising test suites and adding dependency caching.",
+      "priority": "MEDIUM",
+      "status": "COMPLETED",
+      "category": "DevOps",
+      "dueDate": "2026-07-28T00:00:00Z",
+      "createdAt": "2026-07-18T09:00:00Z",
+      "updatedAt": "2026-07-27T17:00:00Z"
+    },
+    {
+      "id": "8",
+      "title": "API rate limiting implementation",
+      "description": "Implement token-bucket rate limiting on public API endpoints. Configure per-tenant thresholds via remote config.",
+      "priority": "HIGH",
+      "status": "TODO",
+      "category": "Backend",
+      "dueDate": "2026-08-12T00:00:00Z",
+      "createdAt": "2026-07-29T08:00:00Z",
+      "updatedAt": "2026-07-31T09:31:41.300Z"
+    },
+    {
+      "id": "9",
+      "title": "Update third-party dependency audit",
+      "description": "Run npm audit and update flagged packages. Review breaking changes for major version bumps.",
+      "priority": "LOW",
+      "status": "TODO",
+      "category": "Maintenance",
+      "dueDate": null,
+      "createdAt": "2026-07-30T10:00:00Z",
+      "updatedAt": "2026-07-30T10:00:00Z"
+    },
+    {
+      "id": "10",
+      "title": "Write integration tests for payment service",
+      "description": "Cover all Stripe webhook scenarios with integration tests. Include refund, partial payment, and subscription renewal flows.",
+      "priority": "MEDIUM",
+      "status": "ARCHIVED",
+      "category": "Testing",
+      "dueDate": "2026-07-20T00:00:00Z",
+      "createdAt": "2026-07-05T08:00:00Z",
+      "updatedAt": "2026-07-19T15:00:00Z"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}
